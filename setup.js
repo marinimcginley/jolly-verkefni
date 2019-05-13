@@ -3,7 +3,7 @@ require('dotenv').config();
 const fs = require('fs');
 const util = require('util');
 
-const { query } = require('./db');
+const { query } = require('./utils/db');
 
 const connectionString = process.env.DATABASE_URL;
 

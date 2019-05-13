@@ -1,110 +1,107 @@
 const express = require('express');
-const { requireAuth } = require('../auth');
+const catchErrors = require('../utils/catchErrors');
+const { requireAuth, checkUserIsAdmin } = require('../authentication/auth');
 
-const router = express.Router();
-
+const requireAdmin = [
+  requireAuth,
+  checkUserIsAdmin,
+];
 /*
 const {
-  getAllProducts,
-  postProduct,
-  getOneProduct,
-  patchOneProduct,
-  deleteOneProduct,
-  postPicture,
+  listCategories,
+  listCategory,
+  createCategory,
+  updateCategory,
+  deleteCategory,
+} = require('./categories');
+*/
+const {
+  listUsers,
+  listUser,
+  updateUser,
+  currentUser,
+  updateCurrentUser,
+} = require('./users');
+/*
+const {
+  listProducts,
+  createProduct,
+  listProduct,
+  updateProduct,
+  deleteProduct,
 } = require('./products');
 
 const {
-  usersRoute,
-  userRoute,
-  adminPatchRouter,
-  meRoute,
-  mePatchRoute,
-  registerRoute,
-} = require('./users');
-
-const {
-  getAllCategories,
-  postCategory,
-  patchOneCategory,
-  deleteOneCategory,
-} = require('./categories');
-
-const {
-  orderRoute,
-  orderPostRoute,
-  getOneOrderRoute,
-} = require('./orders');
-
-const {
-  cartRoute,
-  cartPostRoute,
-  getOneLineInCart,
-  cartLineDeleteRoute,
-  cartLinePatchRoute,
+  listCart,
+  addToCart,
+  listCartLine,
+  updateCartLine,
+  deleteCartLine,
 } = require('./cart');
+
+const {
+  listOrders,
+  createOrder,
+  listOrder,
+} = require('./orders');
 */
 
-function catchErrors(fn) {
-  return (req, res, next) => fn(req, res, next).catch(next);
-}
+const router = express.Router();
 
 function indexRoute(req, res) {
   return res.json({
     users: {
       users: '/users',
-      user: '/user/{id}',
-    },
-    authentication: {
-      register: 'users/register',
-      login: 'users/login',
-    },
-    me: {
+      user: '/users/{id}',
+      register: '/users/register',
+      login: '/users/login',
       me: '/users/me',
-      friends: 'users/me/friends'
     },
-    event: {
-      event: '/event',
-      eventId: '/cart/:id',
+    products: {
+      products: '/products?search={query}&category={name}',
+      product: '/products/{id}',
     },
-    date: {
-      date: '/date',
-      date: '/date/{id}',
+    categories: '/categories',
+    cart: {
+      cart: '/cart',
+      line: '/cart/line/{id}',
+    },
+    orders: {
+      orders: '/orders',
+      order: '/orders/{id}',
     },
   });
 }
 
 router.get('/', indexRoute);
 
-router.get('/users', requireAuth, catchErrors(usersRoute));
-router.get('/users/:id', requireAuth, catchErrors(userRoute));
-router.post('/users/register', catchErrors(registerRoute));
-router.get('/users/me', requireAuth, catchErrors(meRoute));
-router.patch('/users/me', requireAuth, catchErrors(mePatchRoute));
-// ??? friends
+router.get('/users', requireAuth, catchErrors(listUsers));
+router.get('/users/me', requireAuth, catchErrors(currentUser));
+router.patch('/users/me', requireAuth, catchErrors(updateCurrentUser));
+router.get('/users/:id', requireAuth, catchErrors(listUser));
 
 /*
-router.get('/products', catchErrors(getAllProducts));
-router.post('/products', requireAuth, requireAdmin, catchErrors(postProduct));
-router.get('/products/:id', catchErrors(getOneProduct));
-router.post('/products/:id/image', catchErrors(postPicture));
-router.patch('/products/:id', requireAuth, requireAdmin, catchErrors(patchOneProduct));
-router.delete('/products/:id', requireAuth, requireAdmin, catchErrors(deleteOneProduct));
+router.get('/products', catchErrors(listProducts));
+router.post('/products', requireAdmin, catchErrors(createProduct));
+router.get('/products/:id', catchErrors(listProduct));
+router.patch('/products/:id', requireAdmin, catchErrors(updateProduct));
+router.delete('/products/:id', requireAdmin, catchErrors(deleteProduct));
 
-router.get('/categories', catchErrors(getAllCategories));
-router.post('/categories', requireAuth, requireAdmin, catchErrors(postCategory));
-router.patch('/categories/:id', requireAuth, requireAdmin, catchErrors(patchOneCategory));
-router.delete('/categories/:id', requireAuth, requireAdmin, catchErrors(deleteOneCategory));
+router.get('/categories', catchErrors(listCategories));
+router.post('/categories', requireAdmin, catchErrors(createCategory));
+router.get('/categories/:id', catchErrors(listCategory));
+router.patch('/categories/:id', requireAdmin, catchErrors(updateCategory));
+router.delete('/categories/:id', requireAdmin, catchErrors(deleteCategory));
 
-router.get('/cart', requireAuth, catchErrors(cartRoute));
-router.post('/cart', requireAuth, catchErrors(cartPostRoute));
+router.get('/cart', requireAuth, catchErrors(listCart));
+router.post('/cart', requireAuth, catchErrors(addToCart));
+router.get('/cart/line/:id', requireAuth, catchErrors(listCartLine));
+router.patch('/cart/line/:id', requireAuth, catchErrors(updateCartLine));
+router.delete('/cart/line/:id', requireAuth, catchErrors(deleteCartLine));
 
-router.get('/cart/line/:id', requireAuth, catchErrors(getOneLineInCart));
-router.delete('/cart/line/:id', requireAuth, catchErrors(cartLineDeleteRoute));
-router.patch('/cart/line/:id', requireAuth, catchErrors(cartLinePatchRoute));
-
-router.get('/orders', requireAuth, catchErrors(orderRoute));
-router.post('/orders', requireAuth, catchErrors(orderPostRoute));
-router.get('/orders/:id', requireAuth, catchErrors(getOneOrderRoute));
+router.get('/orders', requireAuth, catchErrors(listOrders));
+router.post('/orders', requireAuth, catchErrors(createOrder));
+router.get('/orders/:id', requireAuth, catchErrors(listOrder));
 */
 
 module.exports = router;

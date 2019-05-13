@@ -1,5 +1,6 @@
-
 const { Client } = require('pg');
+
+const { toPositiveNumberOrDefault } = require('./validation');
 
 /**
  * Execute an SQL query.

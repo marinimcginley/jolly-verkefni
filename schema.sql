@@ -1,8 +1,9 @@
 CREATE TABLE users (
   id serial PRIMARY KEY,
-  email varchar(50) UNIQUE NOT NULL,
+  username varchar(50) UNIQUE NOT NULL,
   name varchar(50),
-  password varchar(128) NOT NULL
+  password varchar(128) NOT NULL,
+  image varchar(100) DEFAULT 'https://res.cloudinary.com/dvg18c5ws/image/upload/v1557760503/defaultImage.png'
 );
 
 CREATE TABLE friends (

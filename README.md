@@ -4,7 +4,7 @@
 
 * user
   * `userId`
-  * `email`, einstakt gildi, krafist
+  * `username`, einstakt gildi, krafist
   * `name`
   * `password`
   * `image`, linkur á mynd
@@ -39,15 +39,19 @@ GET á `/` skal skila lista af slóðum í mögulegar aðgerðir.
 ### Notendur
 * `/users`
   * `GET` skilar síðu af öllum notendum, aðeins ef notandi er innskráður
+* `/users?search={query}`
+  * `GET` skilar síðu af notendum þar sem `{query}` er í nafni eða notendanafni
 * `/users/:id`
   * `GET` skilar notanda
 * `/users/register` 
-  * `POST` staðfestir og býr til notanda. Skilar auðkenni og netfangi
+  * `POST` staðfestir og býr til notanda. Skilar auðkenni og notendanafni
 * `/users/login`
-  * `POST` með netfangi og lykilorði skilar token ef gögn eru rétt
+  * `POST` með notendanafni og lykilorði skilar token ef gögn eru rétt
 * `/users/me`
   * `GET` skilar upplýsingum um notanda aðeins ef notandi er innskráður
   * `PATCH` getur uppfært netfang, lykilorð og mynd, aðeins ef notandi er innskráður
+* `/users/me/:id/image`
+  * `POST` bætir við mynd????????????????
 * `/users/me/friends`
   * `GET` skilar upplýsingum um alla vini notanda, aðeins ef notandi er innskráður
   * `POST` bætir nýjum vin á vinalista, aðeins ef notandi er innskráður

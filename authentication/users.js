@@ -17,10 +17,27 @@ const {
   BCRYPT_ROUNDS: bcryptRounds = 11,
 } = process.env;
 
+async function findByUsername(username) {
+  const q = `
+    SELECT
+      id, username, password
+    FROM
+      users
+    WHERE username = $1`;
+
+  const result = await query(q, [username]);
+
+  if (result.rowCount === 1) {
+    return result.rows[0];
+  }
+
+  return null;
+}
+
 async function findByEmail(email) {
   const q = `
     SELECT
-      id, username, password, email, admin
+      id, username, password
     FROM
       users
     WHERE email = $1`;
@@ -35,11 +52,32 @@ async function findByEmail(email) {
 }
 
 async function validateUser(
-  { email, name, password } = {},
+  { username, password, name } = {},
   patching = false,
   id = null,
 ) {
   const validations = [];
+
+  console.log('password: ' + password + ', name: ' + name + ', username: ' + username);
+
+  // can't patch username
+  if (!patching) {
+    if (!isNotEmptyString(username, { min: 3, max: 32 })) {
+      validations.push({
+        field: 'username',
+        error: lengthValidationError(username, 3, 32),
+      });
+    }
+
+    const user = await findByUsername(username);
+
+    if (user) {
+      validations.push({
+        field: 'username',
+        error: 'Username exists',
+      });
+    }
+  }
 
   if (!patching || password || isEmpty(password)) {
     if (badPasswords.indexOf(password) >= 0) {
@@ -57,34 +95,11 @@ async function validateUser(
     }
   }
 
-  if (!patching || email || isEmpty(email)) {
-    if (!isNotEmptyString(email, { min: 1, max: 64 })) {
-      validations.push({
-        field: 'email',
-        error: lengthValidationError(1, 64),
-      });
-    }
-
-    const user = await findByEmail(email);
-
-    if (user) {
-      const current = user.id;
-
-      if (patching && id && current === toPositiveNumberOrDefault(id, 0)) {
-        // we can patch our own email
-      } else {
-        validations.push({
-          field: 'email',
-          error: 'Email exists',
-        });
-      }
-    }
-  }
-
   if (!patching || name || isEmpty(name)) {
+    console.log(name);
     if (!isNotEmptyString(name, { min: 1, max: 64 })) {
       validations.push({
-        field: 'email',
+        field: 'name',
         error: lengthValidationError(1, 64),
       });
     }
@@ -106,7 +121,7 @@ async function findById(id) {
 
   const user = await query(
     `SELECT
-      id, email, name
+      id, username, name, image
     FROM
       users
     WHERE id = $1`,
@@ -120,17 +135,17 @@ async function findById(id) {
   return user.rows[0];
 }
 
-async function createUser(email, name, password) {
+async function createUser(username, password, name) {
   const hashedPassword = await bcrypt.hash(password, bcryptRounds);
 
   const q = `
     INSERT INTO
-      users (name, email, password)
+      users (username, name, password)
     VALUES
       ($1, $2, $3)
     RETURNING *`;
 
-  const values = [xss(name), xss(email), hashedPassword];
+  const values = [xss(username), xss(name), hashedPassword];
   const result = await query(
     q,
     values,
@@ -139,15 +154,14 @@ async function createUser(email, name, password) {
   return result.rows[0];
 }
 
-async function updateUser(id, password, email, name) {
+async function updateUser(id, password, name) {
   if (!isInt(id)) {
     return null;
   }
 
   const fields = [
     isString(password) ? 'password' : null,
-    isString(email) ? 'email' : null,
-    isString(name) ? 'name': null,
+    isString(name) ? 'name' : null,
   ];
 
   let hashedPassword = null;
@@ -158,9 +172,11 @@ async function updateUser(id, password, email, name) {
 
   const values = [
     hashedPassword,
-    isString(email) ? xss(email) : null,
     isString(name) ? xss(name) : null,
   ];
+
+  fields.push('updated');
+  values.push(new Date());
 
   const result = await conditionalUpdate('users', id, fields, values);
 

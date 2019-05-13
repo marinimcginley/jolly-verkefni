@@ -31,13 +31,15 @@ function isEmpty(s) {
     }
   
     if (max && s.length > max) {
+      console.log("lengri en max");
       return false;
     }
   
     if (min && s.length < min) {
+      console.log("styttri en min");
       return false;
     }
-  
+    console.log("fer í gegn");
     return true;
   }
   

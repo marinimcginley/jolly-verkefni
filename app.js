@@ -1,8 +1,8 @@
 require('dotenv').config();
 
 const express = require('express');
-const auth = require('.authentication/auth');
 const api = require('./api');
+const auth = require('./authentication/auth');
 
 const {
   PORT: port = 3000,
