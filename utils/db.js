@@ -1,5 +1,5 @@
 const { Client } = require('pg');
-
+const debug = require('./debug');
 const { toPositiveNumberOrDefault } = require('./validation');
 
 /**

@@ -22,6 +22,10 @@ const {
   currentUser,
   updateCurrentUser,
 } = require('./users');
+
+const {
+  addFriend,
+} = require('./friends');
 /*
 const {
   listProducts,
@@ -51,24 +55,20 @@ const router = express.Router();
 function indexRoute(req, res) {
   return res.json({
     users: {
-      users: '/users',
+      users: '/users?search={query}',
       user: '/users/{id}',
       register: '/users/register',
       login: '/users/login',
       me: '/users/me',
+      friends: '/user/me/friends',
     },
-    products: {
-      products: '/products?search={query}&category={name}',
-      product: '/products/{id}',
+    events: {
+      events: '/events',
+      event: '/events/{id}',
     },
-    categories: '/categories',
-    cart: {
-      cart: '/cart',
-      line: '/cart/line/{id}',
-    },
-    orders: {
-      orders: '/orders',
-      order: '/orders/{id}',
+    dates: {
+      dates: '/dates',
+      date: '/dates/{id}',
     },
   });
 }
@@ -80,28 +80,7 @@ router.get('/users/me', requireAuth, catchErrors(currentUser));
 router.patch('/users/me', requireAuth, catchErrors(updateCurrentUser));
 router.get('/users/:id', requireAuth, catchErrors(listUser));
 
-/*
-router.get('/products', catchErrors(listProducts));
-router.post('/products', requireAdmin, catchErrors(createProduct));
-router.get('/products/:id', catchErrors(listProduct));
-router.patch('/products/:id', requireAdmin, catchErrors(updateProduct));
-router.delete('/products/:id', requireAdmin, catchErrors(deleteProduct));
-
-router.get('/categories', catchErrors(listCategories));
-router.post('/categories', requireAdmin, catchErrors(createCategory));
-router.get('/categories/:id', catchErrors(listCategory));
-router.patch('/categories/:id', requireAdmin, catchErrors(updateCategory));
-router.delete('/categories/:id', requireAdmin, catchErrors(deleteCategory));
-
-router.get('/cart', requireAuth, catchErrors(listCart));
-router.post('/cart', requireAuth, catchErrors(addToCart));
-router.get('/cart/line/:id', requireAuth, catchErrors(listCartLine));
-router.patch('/cart/line/:id', requireAuth, catchErrors(updateCartLine));
-router.delete('/cart/line/:id', requireAuth, catchErrors(deleteCartLine));
-
-router.get('/orders', requireAuth, catchErrors(listOrders));
-router.post('/orders', requireAuth, catchErrors(createOrder));
-router.get('/orders/:id', requireAuth, catchErrors(listOrder));
-*/
+// EKKI BÚIN AÐ PRÓFA !!!!
+router.post('/users/me/friends', requireAuth, catchErrors(addFriend));
 
 module.exports = router;

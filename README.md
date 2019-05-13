@@ -49,9 +49,9 @@ GET á `/` skal skila lista af slóðum í mögulegar aðgerðir.
   * `POST` með notendanafni og lykilorði skilar token ef gögn eru rétt
 * `/users/me`
   * `GET` skilar upplýsingum um notanda aðeins ef notandi er innskráður
-  * `PATCH` getur uppfært netfang, lykilorð og mynd, aðeins ef notandi er innskráður
-* `/users/me/:id/image`
-  * `POST` bætir við mynd????????????????
+  * `PATCH` getur uppfært netfang og lykilorð, aðeins ef notandi er innskráður
+* `/users/me/image`
+  * `PATCH` breytir mynd notanda, aðeins ef notandi er innskráður
 * `/users/me/friends`
   * `GET` skilar upplýsingum um alla vini notanda, aðeins ef notandi er innskráður
   * `POST` bætir nýjum vin á vinalista, aðeins ef notandi er innskráður
@@ -60,20 +60,20 @@ GET á `/` skal skila lista af slóðum í mögulegar aðgerðir.
 
 ### Event
 
-* `/event`
+* `/events`
   * `/GET` skilar öllum eventum notanda, aðeins ef notandi er innskráður
   * `/POST` bætir við event, aðeins ef notandi er innskráður
-* `/event/:id`
+* `/events/:id`
   * `/GET` skilar eventi sem notandi á, aðeins ef notandi er innskráður
   * `/PATCH` uppfærir titil, lýsingu og dagsetningu, aðeins ef notandi er innskráður
   * `/DELETE` eyðir eventi, aðeins ef notandi er innskráður
 
 ### Date
 
-* `/date`
+* `/dates`
   * `/GET` skilar öllum dateum notanda, aðeins ef notandi er innskráður
   * `/POST` bætir við date, aðeins ef notandi er innskráður
-* `/date/:id`
+* `/dates/:id`
   * `/GET` skilar datei sem notandi á, aðeins ef notandi er innskráður
   * `/PATCH` uppfærir titil, lýsingu og dagsetningu, aðeins ef notandi er innskráður
 
