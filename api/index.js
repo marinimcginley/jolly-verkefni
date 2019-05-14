@@ -1,54 +1,20 @@
 const express = require('express');
 const catchErrors = require('../utils/catchErrors');
-const { requireAuth, checkUserIsAdmin } = require('../authentication/auth');
+const { requireAuth } = require('../authentication/auth');
 
-const requireAdmin = [
-  requireAuth,
-  checkUserIsAdmin,
-];
-/*
-const {
-  listCategories,
-  listCategory,
-  createCategory,
-  updateCategory,
-  deleteCategory,
-} = require('./categories');
-*/
 const {
   listUsers,
   listUser,
-  updateUser,
   currentUser,
   updateCurrentUser,
+  updateImage,
 } = require('./users');
 
 const {
   addFriend,
+  listFriends,
+  deleteFriend,
 } = require('./friends');
-/*
-const {
-  listProducts,
-  createProduct,
-  listProduct,
-  updateProduct,
-  deleteProduct,
-} = require('./products');
-
-const {
-  listCart,
-  addToCart,
-  listCartLine,
-  updateCartLine,
-  deleteCartLine,
-} = require('./cart');
-
-const {
-  listOrders,
-  createOrder,
-  listOrder,
-} = require('./orders');
-*/
 
 const router = express.Router();
 
@@ -79,8 +45,10 @@ router.get('/users', requireAuth, catchErrors(listUsers));
 router.get('/users/me', requireAuth, catchErrors(currentUser));
 router.patch('/users/me', requireAuth, catchErrors(updateCurrentUser));
 router.get('/users/:id', requireAuth, catchErrors(listUser));
+router.patch('/users/me/image', requireAuth, catchErrors(updateImage));
 
-// EKKI BÚIN AÐ PRÓFA !!!!
 router.post('/users/me/friends', requireAuth, catchErrors(addFriend));
+router.get('/users/me/friends', requireAuth, catchErrors(listFriends));
+router.delete('/users/me/friends/:id', requireAuth, catchErrors(deleteFriend));
 
 module.exports = router;

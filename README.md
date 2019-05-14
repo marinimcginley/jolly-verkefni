@@ -60,22 +60,36 @@ GET á `/` skal skila lista af slóðum í mögulegar aðgerðir.
 
 ### Event
 
-* `/events`
-  * `/GET` skilar öllum eventum notanda, aðeins ef notandi er innskráður
-  * `/POST` bætir við event, aðeins ef notandi er innskráður
-* `/events/:id`
-  * `/GET` skilar eventi sem notandi á, aðeins ef notandi er innskráður
-  * `/PATCH` uppfærir titil, lýsingu og dagsetningu, aðeins ef notandi er innskráður
-  * `/DELETE` eyðir eventi, aðeins ef notandi er innskráður
+* `/events/me`
+  * `POST` bætir við event, aðeins ef notandi er innskráður
+* `/events/me/day`
+  * `GET` skilar öllum eventum notanda eins ákveðins dags, aðeins ef notandi er innskráður
+* `/events/me/week`
+  * `GET` skilar öllum eventum notanda einnar ákveðinnar viku, aðeins ef notandi er innskráður
+* `/events/me/month`
+  * `GET` skilar öllum eventum notanda eins ákveðins mánaðar, aðeins ef notandi er innskráður
+* `/events/me/jolly`
+  * `GET` skilar öllum eventum notanda og ákveðinna vina, milli ákveðinna tímasetninga, aðeins ef notandi er innskráður
+* `/events/me/:id`
+  * `GET` skilar eventi sem notandi á, aðeins ef notandi er innskráður
+  * `PATCH` uppfærir titil, lýsingu og dagsetningu, aðeins ef notandi er innskráður
+  * `DELETE` eyðir eventi, aðeins ef notandi er innskráður
 
 ### Date
 
-* `/dates`
-  * `/GET` skilar öllum dateum notanda, aðeins ef notandi er innskráður
-  * `/POST` bætir við date, aðeins ef notandi er innskráður
-* `/dates/:id`
-  * `/GET` skilar datei sem notandi á, aðeins ef notandi er innskráður
-  * `/PATCH` uppfærir titil, lýsingu og dagsetningu, aðeins ef notandi er innskráður
+* `/dates/me`
+  * `POST` bætir við date, aðeins ef notandi er innskráður
+* `/dates/me/day`
+  * `GET` skilar öllum dateum notanda eins ákveðins dags, aðeins ef notandi er innskráður
+* `/dates/me/week`
+  * `GET` skilar öllum dateum notanda einnar ákveðinnar viku, aðeins ef notandi er innskráður
+* `/dates/me/month`
+  * `GET` skilar öllum dateum notanda eins ákveðins mánaðar, aðeins ef notandi er innskráður
+* `/dates/me/jolly`
+  * `GET` skilar öllum dateum notanda og ákveðinna vina, milli ákveðinna tímasetninga, aðeins ef notandi er innskráður
+* `/dates/me/:id`
+  * `GET` skilar datei sem notandi á, aðeins ef notandi er innskráður
+  * `PATCH` uppfærir titil, lýsingu og dagsetningu, aðeins ef notandi er innskráður
 
 
 
