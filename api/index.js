@@ -16,6 +16,13 @@ const {
   deleteFriend,
 } = require('./friends');
 
+const {
+  addEvent,
+  getOneEvent,
+  patchEvent,
+  deleteEvent,
+} = require('./events');
+
 const router = express.Router();
 
 function indexRoute(req, res) {
@@ -50,5 +57,10 @@ router.patch('/users/me/image', requireAuth, catchErrors(updateImage));
 router.post('/users/me/friends', requireAuth, catchErrors(addFriend));
 router.get('/users/me/friends', requireAuth, catchErrors(listFriends));
 router.delete('/users/me/friends/:id', requireAuth, catchErrors(deleteFriend));
+
+router.post('/events/me', requireAuth, catchErrors(addEvent));
+router.get('/events/me/:id', requireAuth, catchErrors(getOneEvent));
+router.patch('/events/me/:id', requireAuth, catchErrors(patchEvent));
+router.delete('/events/me/:id', requireAuth, catchErrors(deleteEvent));
 
 module.exports = router;

@@ -1,9 +1,9 @@
 CREATE TABLE users (
   id serial PRIMARY KEY,
-  username varchar(50) UNIQUE NOT NULL,
-  name varchar(50),
+  username varchar(64) UNIQUE NOT NULL,
+  name varchar(64),
   password varchar(128) NOT NULL,
-  image varchar(100) DEFAULT 'https://res.cloudinary.com/dvg18c5ws/image/upload/v1557760503/defaultImage.png'
+  image varchar(128) DEFAULT 'https://res.cloudinary.com/dvg18c5ws/image/upload/v1557760503/defaultImage.png'
 );
 
 CREATE TABLE friends (
@@ -15,7 +15,7 @@ CREATE TABLE friends (
 
 CREATE TABLE events (
   id serial PRIMARY KEY,
-  title varchar(128) NOT NULL,
+  title varchar(64) NOT NULL,
   description varchar(128),
   startTime timestamp with time zone NOT NULL,
   endTime timestamp with time zone NOT NULL,

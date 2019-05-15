@@ -11,6 +11,7 @@ const {
   toPositiveNumberOrDefault,
   lengthValidationError,
 } = require('../utils/validation');
+
 const { query, conditionalUpdate } = require('../utils/db');
 
 const {
@@ -51,7 +52,7 @@ async function findByEmail(email) {
   return null;
 }
 
-async function validateUser(
+async function validateUser (
   { username, password, name } = {},
   patching = false,
   id = null,
