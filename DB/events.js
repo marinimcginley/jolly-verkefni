@@ -13,6 +13,9 @@ const {
 
 const {
   validateEventOrDate,
+  validateDay,
+  validateMonth,
+  validateJolly,
 } = require('./validationForDavents');
 
 async function addEventIntoDB(title, description = undefined, startTime, endTime, userId) {
@@ -34,9 +37,6 @@ async function addEventIntoDB(title, description = undefined, startTime, endTime
     xss(endTime),
     userId,
   ].filter(Boolean);
-
-  console.log("cleaneValues: ");
-  console.log(cleaneValues);
 
   let q;
   if (description) {
@@ -66,6 +66,13 @@ async function addEventIntoDB(title, description = undefined, startTime, endTime
 }
 
 async function getOneEventFromDB(userId, eventId) {
+  if (!isInt(eventId)) {
+    return {
+      success: false,
+      item: null,
+    }
+  }
+
   const q = `
   SELECT
     * 
@@ -198,9 +205,163 @@ async function deleteEventFromDB(userId, eventId) {
   }
 }
 
+async function getOneDayFromDB(userId, date) {
+  const validation = validateDay(date);
+
+  if (validation.length > 0) {
+    return {
+      success: false,
+      error: validation,
+      item: null,
+    }
+  }
+
+  const startTime = `${xss(date.year)}-${xss(date.month)}-${xss(date.day)} 00:00:00`;
+  const endTime = `${xss(date.year)}-${xss(date.month)}-${xss(date.day)} 23:59:59`;
+
+  const q = `
+    SELECT 
+      *
+    FROM
+      events 
+    WHERE (startTime BETWEEN $1 AND $2 OR endTime BETWEEN $1 AND $2)
+    AND userid = $3
+    `;
+  
+  const result = await query(q, [startTime, endTime, userId]);
+
+  return {
+    success: true,
+    error: null,
+    item: result.rows,
+  }
+}
+
+async function getOneMonthFromDB(date, userId) {
+  const validation = validateMonth(date);
+
+  if (validation.length > 0) {
+    return {
+      success: false,
+      error: validation,
+      item: null,
+    }
+  }
+
+  const startTime = `${xss(date.year)}-${xss(date.month)}-01 00:00:00`;
+  const endTime = `${xss(date.year)}-${xss(date.month)}-31 23:59:59`;
+
+  const q = `
+    SELECT 
+      *
+    FROM
+      events 
+    WHERE (startTime BETWEEN $1 AND $2 OR endTime BETWEEN $1 AND $2)
+    AND userid = $3
+    `;
+  
+  const result = await query(q, [startTime, endTime, userId]);
+
+  return {
+    success: true,
+    error: null,
+    item: result.rows,
+  }
+}
+
+async function getJollyEventsFromDB(userId, startTime, endTime, ids) {
+  const validation = validateJolly(startTime, endTime, ids);
+
+  if (validation.length > 0) {
+    return {
+      success: false,
+      error: validation,
+      item: null,
+    }
+  }
+
+  ids.forEach((id, i, array) => { array[i] = parseInt(xss(id), 10)});
+  console.log("ids");
+  console.log(ids);
+
+  // tékka ef allir eru vinir
+  let condition = `friendId = $2`;
+  if (ids.length > 1) {
+    for (let i=1; i<ids.length; i++) {
+      condition = condition + ` OR friendId = $${i+2}`;
+    }
+  }
+
+  let q = `
+    SELECT
+      *
+    FROM
+      friends
+    WHERE userId = $1
+      AND (${condition})`;
+  
+  let values = [userId, ...ids];
+
+  console.log("values");
+  console.log(values);
+  
+  const numberOfFriends = await query(q, values);
+
+  if (ids.length > numberOfFriends.rows.length) {
+    console.log("komst inn");
+    return {
+      success: false,
+      error: {
+        field: 'ids',
+        error: 'not all ids are your friends',
+      },
+      item: null,
+    }
+  }
+
+  condition = `friendId = $4`;
+  if (ids.length > 1) {
+    for (let i=1; i<ids.length; i++) {
+      condition = condition + ` OR friendId = $${i+4}`;
+    }
+  }
+
+  q = `
+    SELECT
+      * 
+    FROM
+      events
+    WHERE (startTime BETWEEN $1 AND $2 OR endTime BETWEEN $1 AND $2)
+    AND
+      userId = $3 OR userId IN (SELECT 
+          friendId
+        FROM
+          friends
+        WHERE
+          userId = $3
+        AND (${condition})
+      )`;
+
+  console.log("query: ");
+  console.log(q);
+  
+  values = [xss(startTime), xss(endTime), userId, ...ids];
+
+  const result = await query(q, values);
+
+  return {
+    success: true,
+    error: null,
+    item: result.rows,
+  }
+}
+
 module.exports = {
   addEventIntoDB,
   getOneEventFromDB,
   patchEventInDB,
   deleteEventFromDB,
+  getOneDayFromDB,
+  getOneMonthFromDB,
+  getJollyEventsFromDB,
 }

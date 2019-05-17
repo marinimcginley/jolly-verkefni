@@ -21,6 +21,9 @@ const {
   getOneEvent,
   patchEvent,
   deleteEvent,
+  getOneDay,
+  getOneMonth,
+  getJollyEvents,
 } = require('./events');
 
 const router = express.Router();
@@ -58,9 +61,15 @@ router.post('/users/me/friends', requireAuth, catchErrors(addFriend));
 router.get('/users/me/friends', requireAuth, catchErrors(listFriends));
 router.delete('/users/me/friends/:id', requireAuth, catchErrors(deleteFriend));
 
-router.post('/events/me', requireAuth, catchErrors(addEvent));
-router.get('/events/me/:id', requireAuth, catchErrors(getOneEvent));
-router.patch('/events/me/:id', requireAuth, catchErrors(patchEvent));
-router.delete('/events/me/:id', requireAuth, catchErrors(deleteEvent));
+router.post('/events/me/event', requireAuth, catchErrors(addEvent));
+router.get('/events/me/event/:id', requireAuth, catchErrors(getOneEvent));
+router.patch('/events/me/event/:id', requireAuth, catchErrors(patchEvent));
+router.delete('/events/me/event/:id', requireAuth, catchErrors(deleteEvent));
+
+router.get('/events/me/day', requireAuth, catchErrors(getOneDay));
+router.get('/events/me/month', requireAuth, catchErrors(getOneMonth));
+
+// EKKI BÚIN AÐ PRÓFA!!!!
+router.get('/events/me/jolly', requireAuth, catchErrors(getJollyEvents));
 
 module.exports = router;

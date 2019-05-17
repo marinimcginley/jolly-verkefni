@@ -9,7 +9,7 @@ async function addFriendIntoDB(friendsUsername, user) {
   let q = `SELECT id FROM users WHERE username = $1`;
   const friendId = await query(q, [xss(friendsUsername)]);
 
-  if (!friendId || friendId.rows[0].id == user.id) {
+  if (friendId.rows.length === 0 || friendId.rows[0].id == user.id) {
     return {
       friend: false,
       friendsAlready: false,

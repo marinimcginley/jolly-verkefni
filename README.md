@@ -60,7 +60,7 @@ GET á `/` skal skila lista af slóðum í mögulegar aðgerðir.
 
 ### Event
 
-* `/events/me`
+* `/events/me/event`
   * `POST` bætir við event, aðeins ef notandi er innskráður
 * `/events/me/day`
   * `GET` skilar öllum eventum notanda eins ákveðins dags, aðeins ef notandi er innskráður
@@ -70,14 +70,14 @@ GET á `/` skal skila lista af slóðum í mögulegar aðgerðir.
   * `GET` skilar öllum eventum notanda eins ákveðins mánaðar, aðeins ef notandi er innskráður
 * `/events/me/jolly`
   * `GET` skilar öllum eventum notanda og ákveðinna vina, milli ákveðinna tímasetninga, aðeins ef notandi er innskráður
-* `/events/me/:id`
+* `/events/me/event/:id`
   * `GET` skilar eventi sem notandi á, aðeins ef notandi er innskráður
   * `PATCH` uppfærir titil, lýsingu og dagsetningu, aðeins ef notandi er innskráður
   * `DELETE` eyðir eventi, aðeins ef notandi er innskráður
 
 ### Date
 
-* `/dates/me`
+* `/dates/me/date`
   * `POST` bætir við date, aðeins ef notandi er innskráður
 * `/dates/me/day`
   * `GET` skilar öllum dateum notanda eins ákveðins dags, aðeins ef notandi er innskráður
@@ -87,7 +87,7 @@ GET á `/` skal skila lista af slóðum í mögulegar aðgerðir.
   * `GET` skilar öllum dateum notanda eins ákveðins mánaðar, aðeins ef notandi er innskráður
 * `/dates/me/jolly`
   * `GET` skilar öllum dateum notanda og ákveðinna vina, milli ákveðinna tímasetninga, aðeins ef notandi er innskráður
-* `/dates/me/:id`
+* `/dates/me/date/:id`
   * `GET` skilar datei sem notandi á, aðeins ef notandi er innskráður
   * `PATCH` uppfærir titil, lýsingu og dagsetningu, aðeins ef notandi er innskráður
 

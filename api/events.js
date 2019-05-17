@@ -3,6 +3,9 @@ const {
   getOneEventFromDB,
   patchEventInDB,
   deleteEventFromDB,
+  getOneDayFromDB,
+  getOneMonthFromDB,
+  getJollyEventsFromDB,
 } = require('../DB/events');
 
 async function addEvent(req, res) {
@@ -69,9 +72,56 @@ async function deleteEvent(req, res) {
   return res.status(204).json({});
 }
 
+async function getOneDay(req, res) {
+  const { user } = req;
+
+  const { year, month, day } = req.body;
+
+  let date = { year, month, day };
+
+  const result = await getOneDayFromDB(user.id, date);
+
+  if (!result.success && result.error.length > 0) {
+    return res.status(400).json(result.error);
+  }
+
+  return res.status(200).json(result.item);
+}
+
+async function getOneMonth(req, res) {
+  const { user } = req;
+  const { year, month } = req.body;
+
+  const date = { year, month };
+
+  const result = await getOneMonthFromDB(date, user.id);
+
+  if (!result.success && result.error.length > 0) {
+    return res.status(400).json(result.error);
+  }
+
+  return res.status(200).json(result.item);
+}
+
+async function getJollyEvents(req, res) {
+  const { user } = req;
+  const { startTime, endTime, ids } = req.body;
+
+  const result = await getJollyEventsFromDB(user.id, startTime, endTime, ids);
+
+  if (!result.success && result.error) {
+    return res.status(400).json(result.error);
+  }
+
+  return res.status(200).json(result.item);
+}
+
 module.exports = {
   addEvent,
   getOneEvent,
   patchEvent,
   deleteEvent,
+  getOneDay,
+  getOneMonth,
+  getJollyEvents,
 }
