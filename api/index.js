@@ -26,6 +26,12 @@ const {
   getJollyEvents,
 } = require('./events');
 
+const {
+  addDate,
+  getDate,
+  getOneDayDates,
+} = require('./dates');
+
 const router = express.Router();
 
 function indexRoute(req, res) {
@@ -65,11 +71,12 @@ router.post('/events/me/event', requireAuth, catchErrors(addEvent));
 router.get('/events/me/event/:id', requireAuth, catchErrors(getOneEvent));
 router.patch('/events/me/event/:id', requireAuth, catchErrors(patchEvent));
 router.delete('/events/me/event/:id', requireAuth, catchErrors(deleteEvent));
-
 router.get('/events/me/day', requireAuth, catchErrors(getOneDay));
 router.get('/events/me/month', requireAuth, catchErrors(getOneMonth));
-
-// EKKI BÚIN AÐ PRÓFA!!!!
 router.get('/events/me/jolly', requireAuth, catchErrors(getJollyEvents));
+
+router.post('/dates/me/date', requireAuth, catchErrors(addDate));
+router.get('/dates/me/date/:id', requireAuth, catchErrors(getDate));
+router.get('/dates/me/day', requireAuth, catchErrors(getOneDayDates));
 
 module.exports = router;

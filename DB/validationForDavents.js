@@ -10,9 +10,10 @@ const {
 const isISO8601 = require('validator/lib/isISO8601');
 
 function validateEventOrDate(
-  { title, description, startTime, endTime } = {},
+  { title, description, startTime, endTime, ids = null } = {},
   patching = false,
   id = null,
+  date = false,
 ) {
 
   const validations = [];
@@ -37,10 +38,6 @@ function validateEventOrDate(
 
   let options = {};
   options.strict = true;
-
-  console.log("isEmpty(startTime)");
-  console.log(isEmpty(startTime));
-  console.log(!startTime);
 
   if (!patching || startTime || isString(startTime)) {
     if (!startTime || !isISO8601(startTime, options)) {
@@ -74,6 +71,22 @@ function validateEventOrDate(
       validations.push({
         field: 'id',
         error: 'id must be an integer',
+      })
+    }
+  }
+
+  if (date) {
+    if (!ids) {
+      validations.push({
+        field: 'ids',
+        error: 'ids cannot be empty',
+      })
+    }
+
+    if (ids && !ids.every(isInt)) {
+      validations.push({
+        field: 'ids',
+        error: 'ids must contain integers only',
       })
     }
   }

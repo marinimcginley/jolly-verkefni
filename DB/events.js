@@ -281,8 +281,6 @@ async function getJollyEventsFromDB(userId, startTime, endTime, ids) {
   }
 
   ids.forEach((id, i, array) => { array[i] = parseInt(xss(id), 10)});
-  console.log("ids");
-  console.log(ids);
 
   // tékka ef allir eru vinir
   let condition = `friendId = $2`;
@@ -301,14 +299,10 @@ async function getJollyEventsFromDB(userId, startTime, endTime, ids) {
       AND (${condition})`;
   
   let values = [userId, ...ids];
-
-  console.log("values");
-  console.log(values);
   
   const numberOfFriends = await query(q, values);
 
   if (ids.length > numberOfFriends.rows.length) {
-    console.log("komst inn");
     return {
       success: false,
       error: {
@@ -341,9 +335,6 @@ async function getJollyEventsFromDB(userId, startTime, endTime, ids) {
           userId = $3
         AND (${condition})
       )`;
-
-  console.log("query: ");
-  console.log(q);
   
   values = [xss(startTime), xss(endTime), userId, ...ids];
 

@@ -89,7 +89,7 @@ GET á `/` skal skila lista af slóðum í mögulegar aðgerðir.
   * `GET` skilar öllum dateum notanda og ákveðinna vina, milli ákveðinna tímasetninga, aðeins ef notandi er innskráður
 * `/dates/me/date/:id`
   * `GET` skilar datei sem notandi á, aðeins ef notandi er innskráður
-  * `PATCH` uppfærir titil, lýsingu og dagsetningu, aðeins ef notandi er innskráður
+  * `DELETE` eyðir tengingu innskráðs notanda og datei sem notandi á, aðeins ef notandi er innskráður
 
-
-
+VERKEFNI EFTIR!!!
+1. Laga að ná í eventa sem hafa startdate fyrir daginn og enddate eftir á. Lappa yfir...
