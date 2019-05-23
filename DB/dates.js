@@ -5,6 +5,7 @@ const { query } = require('../utils/db');
 const { 
   validateEventOrDate,
   validateDay,
+  validateMonth,
 } = require('./validationForDavents');
 
 const {
@@ -188,8 +189,99 @@ async function getOneDayDatesFromDB(year, month, day, id) {
   }
 }
 
+async function getOneMonthDatesFromDB(year, month, id) {
+  const date = { year, month };
+  const validation = validateMonth(date);
+
+  if (validation.length > 0) {
+    return {
+      success: false,
+      error: validation,
+      item: null,
+    }
+  }
+
+  const startTime = `${xss(date.year)}-${xss(date.month)}-01 00:00:00`;
+  const endTime = `${xss(date.year)}-${xss(date.month)}-31 23:59:59`;
+  
+  const q = `
+    SELECT 
+      *
+    FROM
+      dates 
+    WHERE 
+      ((startTime BETWEEN $1 AND $2 OR endTime BETWEEN $1 AND $2)
+    OR 
+      (startTime < $1 AND endTime > $2))
+    AND 
+      id 
+    IN (
+      SELECT 
+        dateId
+      FROM
+        userdates
+      WHERE 
+        userId = $3
+    )
+    `;
+  
+  const result = await query(q, [startTime, endTime, id]);
+
+  return {
+    success: true,
+    error: null,
+    item: result.rows,
+  }
+}
+
+async function deleteMeFromDateFromDB(userId, dateId) {
+  if (!dateId || !isInt(dateId)) {
+    return {
+      success: false,
+      error: {
+        field: 'id',
+        error: 'id must be an integer',
+      }
+    }
+  }
+
+  let q = `
+    SELECT 
+      *
+    FROM
+      userdates
+    WHERE
+      userId = $1 AND dateId = $2`;
+  
+  let result = await query(q, [userId, dateId]);
+
+  if (result.rows.length === 0) {
+    return {
+      success: false,
+      error: {
+        field: 'id',
+        error: 'this date does not belong to you',
+      }
+    }
+  }
+
+  q = `
+  DELETE FROM
+    userdates
+  WHERE
+    userId = $1 AND dateId = $2`;
+  
+  result = await query(q, [userId, dateId]);
+
+  return {
+    success: true,
+  }
+}
+
 module.exports = {
   addDateToDB,
   getDateFromDB,
   getOneDayDatesFromDB,
+  getOneMonthDatesFromDB,
+  deleteMeFromDateFromDB,
 }
