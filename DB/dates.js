@@ -275,6 +275,7 @@ async function deleteMeFromDateFromDB(userId, dateId) {
 
   return {
     success: true,
+    error: null,
   }
 }
 
