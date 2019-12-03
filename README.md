@@ -92,10 +92,10 @@ GET á `/` skal skila lista af slóðum í mögulegar aðgerðir.
   * `DELETE` eyðir tengingu innskráðs notanda og datei sem notandi á, aðeins ef notandi er innskráður
 
 ### VERKEFNI EFTIR!!!
-1. Laga 
-2. Finna út úr viku veseni
-3. Ná í eventa frá mörgum notendum í einu.
-4. Ná í date frá mörgum notendum í einu.
-5. Sameina 3 og 4??
-6. Þýða yfir á ensku og gera betri lýsingar fyrir http-köll
+1. Þýða yfir á ensku og gera betri lýsingar fyrir http-köll
+2. Laga fjölda daga í mánuði
+3. Finna út úr viku veseni
+4. Ná í eventa frá mörgum notendum í einu.
+5. Ná í date frá mörgum notendum í einu.
+6. Sameina 3 og 4??
 7. Jolly
