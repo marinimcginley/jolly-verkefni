@@ -224,7 +224,10 @@ async function getOneDayFromDB(userId, date) {
       *
     FROM
       events 
-    WHERE (startTime BETWEEN $1 AND $2 OR endTime BETWEEN $1 AND $2)
+    WHERE 
+      ((startTime BETWEEN $1 AND $2 OR endTime BETWEEN $1 AND $2)
+      OR 
+        (startTime < $1 AND endTime > $2))
     AND userid = $3
     `;
   
@@ -256,7 +259,10 @@ async function getOneMonthFromDB(date, userId) {
       *
     FROM
       events 
-    WHERE (startTime BETWEEN $1 AND $2 OR endTime BETWEEN $1 AND $2)
+    WHERE 
+      ((startTime BETWEEN $1 AND $2 OR endTime BETWEEN $1 AND $2)
+      OR 
+        (startTime < $1 AND endTime > $2))
     AND userid = $3
     `;
   
@@ -325,7 +331,9 @@ async function getJollyEventsFromDB(userId, startTime, endTime, ids) {
       * 
     FROM
       events
-    WHERE (startTime BETWEEN $1 AND $2 OR endTime BETWEEN $1 AND $2)
+    WHERE ((startTime BETWEEN $1 AND $2 OR endTime BETWEEN $1 AND $2)
+      OR 
+      (startTime < $1 AND endTime > $2))
     AND
       userId = $3 OR userId IN (SELECT 
           friendId

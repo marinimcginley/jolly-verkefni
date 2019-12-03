@@ -92,8 +92,10 @@ GET á `/` skal skila lista af slóðum í mögulegar aðgerðir.
   * `DELETE` eyðir tengingu innskráðs notanda og datei sem notandi á, aðeins ef notandi er innskráður
 
 ### VERKEFNI EFTIR!!!
-1. Laga að ná í eventa sem hafa startdate fyrir daginn og enddate eftir á. Lappa yfir...
+1. Laga 
 2. Finna út úr viku veseni
 3. Ná í eventa frá mörgum notendum í einu.
 4. Ná í date frá mörgum notendum í einu.
 5. Sameina 3 og 4??
+6. Þýða yfir á ensku og gera betri lýsingar fyrir http-köll
+7. Jolly
