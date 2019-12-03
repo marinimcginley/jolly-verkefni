@@ -1,13 +1,13 @@
-# jolly-verkefni
+# jolly-project
 
 ## Töflur
 
 * user
   * `userId`
-  * `username`, einstakt gildi, krafist
+  * `username`, unique value, required
   * `name`
   * `password`
-  * `image`, linkur á mynd
+  * `image`, link to a picture
 
 * friends
   * `userId`
@@ -34,32 +34,35 @@
 
 ## Vefþjónustur
 
-GET á `/` skal skila lista af slóðum í mögulegar aðgerðir.
+GET to `/` will return a list of URLs for all possible actions.
 
 ### Notendur
 * `/users`
-  * `GET` skilar síðu af öllum notendum, aðeins ef notandi er innskráður
+  * `GET` returns all users, only if user is logged in
 * `/users?search={query}`
-  * `GET` skilar síðu af notendum þar sem `{query}` er í nafni eða notendanafni
+  * `GET` returns all users where `{query}` is in a users name or username
 * `/users/:id`
-  * `GET` skilar notanda
+  * `GET` returns a user
 * `/users/register` 
-  * `POST` staðfestir og býr til notanda. Skilar auðkenni og notendanafni
+  * `POST` confirms and creates a user. Returns a token and username ???IS THIS CORRECT????
+    * `username`, `password` and `name` must be in body
 * `/users/login`
-  * `POST` með notendanafni og lykilorði skilar token ef gögn eru rétt
+  * `POST` returns a token if data is correct
+    * `username` and `password` must be in body
 * `/users/me`
-  * `GET` skilar upplýsingum um notanda aðeins ef notandi er innskráður
-  * `PATCH` getur uppfært netfang og lykilorð, aðeins ef notandi er innskráður
+  * `GET` returns information about users only if the user is logged in
+  * `PATCH` can update password, only if the user is logged in
 * `/users/me/image`
-  * `PATCH` breytir mynd notanda, aðeins ef notandi er innskráður
+  * `PATCH` can update the user's picture, only if the user is logged in
 * `/users/me/friends`
-  * `GET` skilar upplýsingum um alla vini notanda, aðeins ef notandi er innskráður
-  * `POST` bætir nýjum vin á vinalista, aðeins ef notandi er innskráður
+  * `GET` returns information about all of user's friends, only if the user is logged in
+  * `POST` adds a new friend to a user's friend list, only if the user is logged in
+    * `username` must be in body
 * `/users/me/friends/:id`
-  * `DELETE` eyðir vin af vinalista notanda ef hann er innskráður
+  * `DELETE` removes a friend from a user's friend list, only if the user is logged in
 
 ### Event
-
+----- KOMIN HINGAÐ-----
 * `/events/me/event`
   * `POST` bætir við event, aðeins ef notandi er innskráður
 * `/events/me/day`
