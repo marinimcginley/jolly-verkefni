@@ -9,6 +9,18 @@ const {
 
 const isISO8601 = require('validator/lib/isISO8601');
 
+function lastDayOfMonth(year, month) {
+  if (month == 1 || month == 3 || month == 5
+    || month == 7|| month == 8|| month == 10
+    || month == 12) {
+    return 31;
+  } else if (month == 2 && year%4 == 0) {
+    return 29;
+  } else if (month == 2 && year%4 == 1) {
+    return 28;
+  } else return 30;
+}
+
 function validateEventOrDate(
   { title, description, startTime, endTime, ids = null } = {},
   patching = false,
@@ -216,4 +228,5 @@ module.exports = {
   validateDay,
   validateMonth,
   validateJolly,
+  lastDayOfMonth,
 }

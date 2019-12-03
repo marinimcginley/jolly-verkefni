@@ -16,6 +16,7 @@ const {
   validateDay,
   validateMonth,
   validateJolly,
+  lastDayOfMonth,
 } = require('./validationForDavents');
 
 async function addEventIntoDB(title, description = undefined, startTime, endTime, userId) {
@@ -251,8 +252,10 @@ async function getOneMonthFromDB(date, userId) {
     }
   }
 
+  const month = lastDayOfMonth(date.year, date.month);
+
   const startTime = `${xss(date.year)}-${xss(date.month)}-01 00:00:00`;
-  const endTime = `${xss(date.year)}-${xss(date.month)}-31 23:59:59`;
+  const endTime = `${xss(date.year)}-${xss(date.month)}-${month} 23:59:59`;
 
   const q = `
     SELECT 
