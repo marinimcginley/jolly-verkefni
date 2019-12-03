@@ -85,18 +85,24 @@ GET to `/` will return a list of URLs for all possible actions.
   * `DELETE` removes an event, only if user is logged in
 
 ### Date
--- KOMIN HINGAÐ --
+
 * `/dates/me/date`
-  * `POST` bætir við date, aðeins ef notandi er innskráður
+  * `POST` adds a date, only if user is logged in
+    * `title`, `description` (optional), `startTime`, `endTime`, `ids` must be in body
 * `/dates/me/day`
-  * `GET` skilar öllum dateum notanda eins ákveðins dags, aðeins ef notandi er innskráður
+  * `GET` returns all of user's dates for one particular date, only if user is logged in
+    * `year`, `month` and `day` must be in body
 * `/dates/me/week`
-  * `GET` skilar öllum dateum notanda einnar ákveðinnar viku, aðeins ef notandi er innskráður
+  * `GET` returns all of user's dates within one week, only if user is logged in
+    * NOT FINISHED!!!!!
 * `/dates/me/month`
-  * `GET` skilar öllum dateum notanda eins ákveðins mánaðar, aðeins ef notandi er innskráður
+  * `GET` returns all of users dates within one month, only if user is logged in
+    * `year` and `month` must be in body
 * `/dates/me/jolly`
-  * `GET` skilar öllum dateum notanda og ákveðinna vina, milli ákveðinna tímasetninga, aðeins ef notandi er innskráður
+  * `GET` returns all of uers's dates and chosen friends, within two particular dates, only if user is logged in
+    * NOT FINISHED!!!
 * `/dates/me/date/:id`
+-- KOMIN HINGAÐ --
   * `GET` skilar datei sem notandi á, aðeins ef notandi er innskráður
   * `DELETE` eyðir tengingu innskráðs notanda og datei sem notandi á, aðeins ef notandi er innskráður
 
@@ -104,7 +110,7 @@ GET to `/` will return a list of URLs for all possible actions.
 1. Þýða yfir á ensku og gera betri lýsingar fyrir http-köll
 2. Laga fjölda daga í mánuði
 3. Finna út úr viku veseni
-4. Ná í eventa frá mörgum notendum í einu.
+4. Ná í eventa frá mörgum notendum í einu. ?? BÚIN ??
 5. Ná í date frá mörgum notendum í einu.
 6. Sameina 3 og 4??
 7. Jolly

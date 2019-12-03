@@ -82,5 +82,6 @@ router.get('/dates/me/date/:id', requireAuth, catchErrors(getDate));
 router.get('/dates/me/day', requireAuth, catchErrors(getOneDayDates));
 router.get('/dates/me/month', requireAuth, catchErrors(getOneMonthDates));
 router.delete('/dates/me/date/:id', requireAuth, catchErrors(deleteMeFromDate));
+// jolly date eftir
 
 module.exports = router;
