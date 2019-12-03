@@ -1,6 +1,6 @@
 # jolly-project
 
-## Töflur
+## Tables
 
 * user
   * `userId`
@@ -32,11 +32,11 @@
   * `userId`
   * `dateId`
 
-## Vefþjónustur
+## Web service
 
 GET to `/` will return a list of URLs for all possible actions.
 
-### Notendur
+### Users
 * `/users`
   * `GET` returns all users, only if user is logged in
 * `/users?search={query}`
@@ -62,24 +62,30 @@ GET to `/` will return a list of URLs for all possible actions.
   * `DELETE` removes a friend from a user's friend list, only if the user is logged in
 
 ### Event
------ KOMIN HINGAÐ-----
+
 * `/events/me/event`
-  * `POST` bætir við event, aðeins ef notandi er innskráður
+  * `POST` adds an event, only if the user is logged in
+    * `title`, `description` (optional), `startTime`, `endTime` must be in body
 * `/events/me/day`
-  * `GET` skilar öllum eventum notanda eins ákveðins dags, aðeins ef notandi er innskráður
+  * `GET` returns all user's events of one particular day, only if the user is logged in
+    * `year`, `month` and `day` must be in body
 * `/events/me/week`
-  * `GET` skilar öllum eventum notanda einnar ákveðinnar viku, aðeins ef notandi er innskráður
+  * `GET` returns all user's events of one week, only if user is logged in
+    * NOT FINISHED!!!
 * `/events/me/month`
-  * `GET` skilar öllum eventum notanda eins ákveðins mánaðar, aðeins ef notandi er innskráður
+  * `GET` returns all user's events of a particular month, only if user is logged in
+    * `year` and `month` must be in body
 * `/events/me/jolly`
-  * `GET` skilar öllum eventum notanda og ákveðinna vina, milli ákveðinna tímasetninga, aðeins ef notandi er innskráður
+  * `GET` returns all of user's events and chosen friends, between particulart dates, only if user is logged in
+    * `startTime`, `endTime` and `ids` must be in body
 * `/events/me/event/:id`
-  * `GET` skilar eventi sem notandi á, aðeins ef notandi er innskráður
-  * `PATCH` uppfærir titil, lýsingu og dagsetningu, aðeins ef notandi er innskráður
-  * `DELETE` eyðir eventi, aðeins ef notandi er innskráður
+  * `GET` returns an event of user's, only if user is logged in
+  * `PATCH` updates title, description and dates of a user's event, only if user is logged in
+    * `title`, `description`, `starTime` and `endTime` can be in body
+  * `DELETE` removes an event, only if user is logged in
 
 ### Date
-
+-- KOMIN HINGAÐ --
 * `/dates/me/date`
   * `POST` bætir við date, aðeins ef notandi er innskráður
 * `/dates/me/day`
