@@ -103,11 +103,10 @@ GET to `/` will return a list of URLs for all possible actions.
     * NOT FINISHED!!!
 * `/dates/me/date/:id`
 -- KOMIN HINGAÐ --
-  * `GET` skilar datei sem notandi á, aðeins ef notandi er innskráður
-  * `DELETE` eyðir tengingu innskráðs notanda og datei sem notandi á, aðeins ef notandi er innskráður
+  * `GET` returns a user's date, only if user is logged in
+  * `DELETE` removes user's date, only if user is logged in
 
 ### VERKEFNI EFTIR!!!
-1. Þýða yfir á ensku og gera betri lýsingar fyrir http-köll
 2. Laga fjölda daga í mánuði
 3. Finna út úr viku veseni
 4. Ná í eventa frá mörgum notendum í einu. ?? BÚIN ??
