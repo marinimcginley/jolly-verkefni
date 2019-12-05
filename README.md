@@ -50,7 +50,7 @@ GET to `/` will return a list of URLs for all possible actions.
   * `POST` returns a token if data is correct
     * `username` and `password` must be in body
 * `/users/me`
-  * `GET` returns information about users only if the user is logged in
+  * `GET` returns information about user only if the user is logged in
   * `PATCH` can update password, only if the user is logged in
 * `/users/me/image`
   * `PATCH` can update the user's picture, only if the user is logged in
@@ -106,8 +106,7 @@ GET to `/` will return a list of URLs for all possible actions.
   * `DELETE` removes user's date, only if user is logged in
 
 ### VERKEFNI EFTIR!!!
-3. Finna út úr viku veseni
-4. Ná í eventa frá mörgum notendum í einu. ?? BÚIN ??
+3. Finna út úr viku veseni (GEYMA) fyrir bæði event og date
 5. Ná í date frá mörgum notendum í einu.
 6. Sameina 3 og 4??
 7. Jolly

@@ -336,15 +336,15 @@ async function getJollyEventsFromDB(userId, startTime, endTime, ids) {
       events
     WHERE ((startTime BETWEEN $1 AND $2 OR endTime BETWEEN $1 AND $2)
       OR 
-      (startTime < $1 AND endTime > $2))
+        (startTime < $1 AND endTime > $2))
     AND
-      userId = $3 OR userId IN (SELECT 
+      (userId = $3 OR userId IN (SELECT 
           friendId
         FROM
           friends
         WHERE
           userId = $3
-        AND (${condition})
+        AND (${condition}))
       )`;
   
   values = [xss(startTime), xss(endTime), userId, ...ids];
