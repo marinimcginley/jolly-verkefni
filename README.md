@@ -102,12 +102,10 @@ GET to `/` will return a list of URLs for all possible actions.
   * `GET` returns all of uers's dates and chosen friends, within two particular dates, only if user is logged in
     * NOT FINISHED!!!
 * `/dates/me/date/:id`
--- KOMIN HINGAÐ --
   * `GET` returns a user's date, only if user is logged in
   * `DELETE` removes user's date, only if user is logged in
 
 ### VERKEFNI EFTIR!!!
-2. Laga fjölda daga í mánuði --- ennþá!!
 3. Finna út úr viku veseni
 4. Ná í eventa frá mörgum notendum í einu. ?? BÚIN ??
 5. Ná í date frá mörgum notendum í einu.
