@@ -100,7 +100,6 @@ GET to `/` will return a list of URLs for all possible actions.
     * `year` and `month` must be in body
 * `/dates/me/jolly`
   * `GET` returns all of uers's dates and chosen friends, within two particular dates, only if user is logged in
-    * NOT FINISHED!!!
 * `/dates/me/date/:id`
   * `GET` returns a user's date, only if user is logged in
   * `DELETE` removes user's date, only if user is logged in
