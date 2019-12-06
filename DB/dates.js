@@ -6,6 +6,7 @@ const {
   validateEventOrDate,
   validateDay,
   validateMonth,
+  validateJolly,
 } = require('./validationForDavents');
 
 const {
@@ -279,10 +280,92 @@ async function deleteMeFromDateFromDB(userId, dateId) {
   }
 }
 
+async function getJollyDatesFromDB(userId, startTime, endTime, ids) {
+  const validation = validateJolly(startTime, endTime, ids);
+
+  if (validation.length > 0) {
+    return {
+      success: false,
+      error: validation,
+      item: null,
+    }
+  }
+
+  ids.forEach((id, i, array) => { array[i] = parseInt(xss(id), 10)});
+
+  // tékka ef allir eru vinir
+  let condition = `friendId = $2`;
+  if (ids.length > 1) {
+    for (let i=1; i<ids.length; i++) {
+      condition = condition + ` OR friendId = $${i+2}`;
+    }
+  }
+
+  let q = `
+    SELECT
+      *
+    FROM
+      friends
+    WHERE userId = $1
+      AND (${condition})`;
+  
+  let values = [userId, ...ids];
+  
+  const numberOfFriends = await query(q, values);
+
+  if (ids.length > numberOfFriends.rows.length) {
+    return {
+      success: false,
+      error: {
+        field: 'ids',
+        error: 'not all ids are your friends',
+      },
+      item: null,
+    }
+  }
+
+  condition = `userdates.userId = $4`;
+  if (ids.length > 1) {
+    for (let i=1; i<ids.length; i++) {
+      condition = condition + ` OR userdates.userId = $${i+4}`;
+    }
+  }
+
+  q = `
+    SELECT
+      dates.id, dates.title, dates.description, dates.startTime,
+      dates.endTime
+    FROM
+      dates
+    INNER JOIN userdates ON userdates.dateId = dates.id
+    WHERE ((startTime BETWEEN $1 AND $2 OR endTime BETWEEN $1 AND $2)
+      OR 
+        (startTime < $1 AND endTime > $2))
+    AND 
+      (userdates.userId = $3
+    OR
+      (${condition})
+    )
+    GROUP BY dates.id;
+  `;
+
+
+  values = [xss(startTime), xss(endTime), userId, ...ids];
+
+  const result = await query(q, values);
+
+  return {
+    success: true,
+    error: null,
+    item: result.rows,
+  }
+}
+
 module.exports = {
   addDateToDB,
   getDateFromDB,
   getOneDayDatesFromDB,
   getOneMonthDatesFromDB,
   deleteMeFromDateFromDB,
+  getJollyDatesFromDB,
 }

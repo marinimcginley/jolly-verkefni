@@ -32,6 +32,7 @@ const {
   getOneDayDates,
   getOneMonthDates,
   deleteMeFromDate,
+  getJollyDates,
 } = require('./dates');
 
 const router = express.Router();
@@ -82,6 +83,6 @@ router.get('/dates/me/date/:id', requireAuth, catchErrors(getDate));
 router.get('/dates/me/day', requireAuth, catchErrors(getOneDayDates));
 router.get('/dates/me/month', requireAuth, catchErrors(getOneMonthDates));
 router.delete('/dates/me/date/:id', requireAuth, catchErrors(deleteMeFromDate));
-// jolly date eftir
+router.get('/dates/me/jolly', requireAuth, catchErrors(getJollyDates));
 
 module.exports = router;

@@ -4,6 +4,7 @@ const {
   getOneDayDatesFromDB,
   getOneMonthDatesFromDB,
   deleteMeFromDateFromDB,
+  getJollyDatesFromDB,
 } = require('../DB/dates');
 
 
@@ -72,10 +73,24 @@ async function deleteMeFromDate(req, res) {
   return res.status(204).json({});
 }
 
+async function getJollyDates(req, res) {
+  const { user } = req;
+  const { startTime, endTime, ids } = req.body;
+
+  const result = await getJollyDatesFromDB(user.id, startTime, endTime, ids);
+
+  if (!result.success && result.error) {
+    return res.status(400).json(result.error);
+  }
+
+  return res.status(200).json(result.item);
+}
+
 module.exports = {
   addDate,
   getDate,
   getOneDayDates,
   getOneMonthDates,
   deleteMeFromDate,
+  getJollyDates,
 }

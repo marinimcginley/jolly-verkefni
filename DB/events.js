@@ -329,6 +329,8 @@ async function getJollyEventsFromDB(userId, startTime, endTime, ids) {
     }
   }
 
+  // óþarfi að tékka á vinum, búin að gera það! 
+  // laga kannski seinna...
   q = `
     SELECT
       * 

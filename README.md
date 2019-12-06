@@ -107,6 +107,5 @@ GET to `/` will return a list of URLs for all possible actions.
 
 ### VERKEFNI EFTIR!!!
 3. Finna út úr viku veseni (GEYMA) fyrir bæði event og date
-5. Ná í date frá mörgum notendum í einu.
-6. Sameina 3 og 4??
 7. Jolly
+8. Þegar þú addar þér sem vin kemur: This is not a username eða eitthvað
