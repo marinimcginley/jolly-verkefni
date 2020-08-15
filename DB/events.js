@@ -134,8 +134,8 @@ async function patchEventInDB(event, userId) {
       success: false,
       notFound: false,
       error: {
-        field: 'endTime',
-        error: 'endTime cannot come before startTime',
+        field: 'EndTime',
+        error: 'EndTime cannot come before startTime',
       },
       item: null,
     }
@@ -315,8 +315,8 @@ async function getJollyEventsFromDB(userId, startTime, endTime, ids) {
     return {
       success: false,
       error: {
-        field: 'ids',
-        error: 'not all ids are your friends',
+        field: 'Ids',
+        error: 'Not all ids are your friends',
       },
       item: null,
     }

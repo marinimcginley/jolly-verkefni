@@ -55,8 +55,8 @@ async function addDateToDB(userId, title, description, startTime, endTime, ids) 
     return {
       success: false,
       error: {
-        field: 'ids',
-        error: 'not all ids are your friends',
+        field: 'Ids',
+        error: 'Not all ids are your friends',
       },
       item: null,
     }
@@ -98,8 +98,8 @@ async function getDateFromDB(userId, dateId) {
     return {
       success: false,
       error: {
-        field: 'id',
-        error: 'id must be an integer',
+        field: 'Id',
+        error: 'Id must be an integer',
       },
       item: null,
     }
@@ -127,8 +127,8 @@ async function getDateFromDB(userId, dateId) {
     return {
       success: false,
       error: {
-        field: 'id',
-        error: 'this date does not belong to you',
+        field: 'Id',
+        error: 'This date does not belong to you',
       },
       item: null,
     }
@@ -240,8 +240,8 @@ async function deleteMeFromDateFromDB(userId, dateId) {
     return {
       success: false,
       error: {
-        field: 'id',
-        error: 'id must be an integer',
+        field: 'Id',
+        error: 'Id must be an integer',
       }
     }
   }
@@ -260,8 +260,8 @@ async function deleteMeFromDateFromDB(userId, dateId) {
     return {
       success: false,
       error: {
-        field: 'id',
-        error: 'this date does not belong to you',
+        field: 'Id',
+        error: 'This date does not belong to you',
       }
     }
   }
@@ -317,8 +317,8 @@ async function getJollyDatesFromDB(userId, startTime, endTime, ids) {
     return {
       success: false,
       error: {
-        field: 'ids',
-        error: 'not all ids are your friends',
+        field: 'Ids',
+        error: 'Not all ids are your friends',
       },
       item: null,
     }

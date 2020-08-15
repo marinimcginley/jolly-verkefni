@@ -65,7 +65,7 @@ async function validateUser (
   if (!patching) {
     if (!isNotEmptyString(username, { min: 3, max: 32 })) {
       validations.push({
-        field: 'username',
+        field: 'Username',
         error: lengthValidationError(username, 3, 32),
       });
     }
@@ -74,7 +74,7 @@ async function validateUser (
 
     if (user) {
       validations.push({
-        field: 'username',
+        field: 'Username',
         error: 'Username exists',
       });
     }
@@ -83,14 +83,14 @@ async function validateUser (
   if (!patching || password || isEmpty(password)) {
     if (badPasswords.indexOf(password) >= 0) {
       validations.push({
-        field: 'password',
+        field: 'Password',
         error: 'Password is too bad',
       });
     }
 
     if (!isNotEmptyString(password, { min: 8 })) {
       validations.push({
-        field: 'password',
+        field: 'Password',
         error: lengthValidationError(password, 8),
       });
     }
@@ -100,7 +100,7 @@ async function validateUser (
     console.log(name);
     if (!isNotEmptyString(name, { min: 1, max: 64 })) {
       validations.push({
-        field: 'name',
+        field: 'Name',
         error: lengthValidationError(1, 64),
       });
     }

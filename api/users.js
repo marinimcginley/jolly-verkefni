@@ -130,7 +130,7 @@ async function withMulter(req, res, next, fn) {
       if (err) {
         if (err.message === 'Unexpected field') {
           const errors = [{
-            field: 'image',
+            field: 'Image',
             error: 'Unable to read image',
           }];
           return res.status(400).json({ errors });
@@ -160,7 +160,7 @@ async function updateImageInDB(req, res, next) {
   if (hasImage) {
     if (!validateImageMimetype(mimetype)) {
       validations.push({
-        field: 'image',
+        field: 'Image',
         error: `Mimetype ${mimetype} is not legal. ` + 
         `Only ${MIMETYPES.join(', ')} are accepted`,
       });
@@ -180,7 +180,7 @@ async function updateImageInDB(req, res, next) {
     } catch (error) {
       if (error.http_code && error.http_code === 400) {
         return res.status(400).json({ errors: [{
-          field: 'image',
+          field: 'Image',
           error: error.message,
         }] });
       }

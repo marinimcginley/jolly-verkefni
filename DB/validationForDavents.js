@@ -33,7 +33,7 @@ function validateEventOrDate(
   if (!patching || title || isString(title)) {
     if (!isNotEmptyString(title, { min: 1, max: 64 })) {
       validations.push({
-        field: 'title',
+        field: 'Title',
         error: lengthValidationError(1, 64),
       });
     }
@@ -42,7 +42,7 @@ function validateEventOrDate(
   if (description) {
     if (!isNotEmptyString(description, { min: 1, max: 128})) {
       validations.push({
-        file: 'description',
+        file: 'Description',
         error: lengthValidationError(1,128),
       });
     }
@@ -54,8 +54,8 @@ function validateEventOrDate(
   if (!patching || startTime || isString(startTime)) {
     if (!startTime || !isISO8601(startTime, options)) {
       validations.push({
-        field: 'startTime',
-        error: 'startTime must be on ISO 8601 standard',  
+        field: 'StartTime',
+        error: 'StartTime must be on ISO 8601 standard',  
       });
     }
   }
@@ -63,8 +63,8 @@ function validateEventOrDate(
   if (!patching || endTime || isString(endTime, options)) {
     if (!endTime || !isISO8601(endTime)) {
       validations.push({
-        field: 'endTime',
-        error: 'endTime must be on ISO 8601 standard',  
+        field: 'EndTime',
+        error: 'EndTime must be on ISO 8601 standard',  
       });
     }
   }
@@ -72,8 +72,8 @@ function validateEventOrDate(
   if (startTime && endTime) {
     if (new Date(startTime) - new Date(endTime) > 0) {
       validations.push({
-        field: 'endTime',
-        error: 'endTime cannot come before startTime',
+        field: 'EndTime',
+        error: 'EndTime cannot come before startTime',
       });
     }
   }
@@ -81,8 +81,8 @@ function validateEventOrDate(
   if (patching) {
     if (!isInt(id)) {
       validations.push({
-        field: 'id',
-        error: 'id must be an integer',
+        field: 'Id',
+        error: 'Id must be an integer',
       })
     }
   }
@@ -90,15 +90,15 @@ function validateEventOrDate(
   if (date) {
     if (!ids) {
       validations.push({
-        field: 'ids',
-        error: 'ids cannot be empty',
+        field: 'Ids',
+        error: 'Ids cannot be empty',
       })
     }
 
     if (ids && !ids.every(isInt)) {
       validations.push({
-        field: 'ids',
-        error: 'ids must contain integers only',
+        field: 'Ids',
+        error: 'Ids must contain integers only',
       })
     }
   }
@@ -113,22 +113,22 @@ function validateDay(date) {
   
   if (!year || !isInt(year)) {
     validations.push({
-      field: 'year',
-      error: 'year must be an integer',
+      field: 'Year',
+      error: 'Year must be an integer',
     });
   }
 
   if (!month || !isInt(month) || month < 1 || month > 12) {
     validations.push({
-      field: 'month',
-      error: 'month must be an integer between 1 and 12',
+      field: 'Month',
+      error: 'Month must be an integer between 1 and 12',
     });
   }
 
   if (!day || !isInt(day) || day < 1 || day > 31) {
     validations.push({
-      field: 'day',
-      error: 'day must be an integer between 1 and 31',
+      field: 'Day',
+      error: 'Day must be an integer between 1 and 31',
     });
   }
 
@@ -147,8 +147,8 @@ function validateDay(date) {
 
   if (!isISO8601(newDate, options)) {
     validations.push({
-      field: 'date',
-      error: 'year, month and day are not a valid ISO 8601 date',
+      field: 'Date',
+      error: 'Year, month and day are not a valid ISO 8601 date',
     })
   }
 
@@ -162,15 +162,15 @@ function validateMonth(date) {
   
   if (!year || !isInt(year)) {
     validations.push({
-      field: 'year',
-      error: 'year must be an integer',
+      field: 'Year',
+      error: 'Year must be an integer',
     });
   }
 
   if (!month || !isInt(month) || month < 1 || month > 12) {
     validations.push({
-      field: 'month',
-      error: 'month must be an integer between 1 and 12',
+      field: 'Month',
+      error: 'Month must be an integer between 1 and 12',
     });
   }
 
@@ -185,37 +185,37 @@ function validateJolly(startTime, endTime, ids) {
 
   if (!startTime || !isISO8601(startTime, options)) {
     validations.push({
-      field: 'startTime',
-      error: 'startTime is not a valid ISO 8601 date',
+      field: 'StartTime',
+      error: 'StartTime is not a valid ISO 8601 date',
     })
   }
 
   if (!endTime || !isISO8601(endTime, options)) {
     validations.push({
-      field: 'endTime',
-      error: 'endTime is not a valid ISO 8601 date',
+      field: 'EndTime',
+      error: 'EndTime is not a valid ISO 8601 date',
     })
   }
 
   if (!startTime || !endTime || new Date(startTime) - new Date(endTime) > 0) {
     validations.push({
-      field: 'endTime',
-      error: 'endTime cannot come before startTime',
+      field: 'EndTime',
+      error: 'EndTime cannot come before startTime',
     });
   }
 
   if (!ids || ids.length === 0) {
     validations.push({
-      field: 'ids',
-      error: 'ids must contain at least one integer',
+      field: 'Ids',
+      error: 'Ids must contain at least one integer',
     })
   }
 
   if (ids) {
     if (!ids.every(isInt)) {
       validations.push({
-        field: 'ids',
-        error: 'ids must contain integers only',
+        field: 'Ids',
+        error: 'Ids must contain integers only',
       })
     }
   }
